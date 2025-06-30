@@ -78,4 +78,5 @@ ReadActはこうした従来の方向性とは異なり、あえて入力枠や�
 ・行動カウント機能: Actionモデルにカウント用カラムを追加予定  
 
 ### 画面遷移図
-Figmaへリンク: https://www.figma.com/design/c9YW1iwNyb3UY7Kwd9S4Ix/Readact?node-id=53-2389&t=FXNMSOKI40si2QCU-1
+Figmaへリンク:
+https://www.figma.com/design/c9YW1iwNyb3UY7Kwd9S4Ix/Readact?node-id=53-2389&t=sDGIAjvASt4xMbfl-1
