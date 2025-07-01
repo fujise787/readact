@@ -76,3 +76,7 @@ ReadActはこうした従来の方向性とは異なり、あえて入力枠や�
 ・非同期ジョブ処理: Sidekiq(リマインダー通知に使用)  
 ・通知方法: Webアプリ内ポップアップ通知  
 ・行動カウント機能: Actionモデルにカウント用カラムを追加予定  
+
+### 画面遷移図
+Figmaへリンク:
+https://www.figma.com/design/c9YW1iwNyb3UY7Kwd9S4Ix/Readact?node-id=53-2389&t=sDGIAjvASt4xMbfl-1
