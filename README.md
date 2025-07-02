@@ -80,3 +80,7 @@ ReadActはこうした従来の方向性とは異なり、あえて入力枠や�
 ### 画面遷移図
 Figmaへリンク:
 https://www.figma.com/design/c9YW1iwNyb3UY7Kwd9S4Ix/Readact?node-id=53-2389&t=sDGIAjvASt4xMbfl-1
+
+### ER図
+ER図へリンク:
+https://gyazo.com/55bbeee7598c5dd537f3a833ab7ccb91
