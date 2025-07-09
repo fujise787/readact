@@ -6,5 +6,4 @@ class Note < ApplicationRecord
   has_many :actions, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: 255 }
-  validates :user_id, presence: true
 end
