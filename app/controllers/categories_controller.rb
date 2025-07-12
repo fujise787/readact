@@ -1,20 +1,20 @@
 class CategoriesController < ApplicationController
-  before_action :set_categories
+  before_action :authenticate_user!
 
   def index ; end
 
   def create
-    @category = Category.new(category_params)
-    unless @category.save
-      flash.now[:alert] = "カテゴリの登録に失敗しました"
+    @category = current_user.categories.build(category_params)
+
+    if @category.save
+      flash[:notice] = "カテゴリを登録しました"
+    else
+      flash[:alert] = "カテゴリの登録に失敗しました"
     end
+    redirect_back fallback_location: root_path
   end
 
   private
-
-  def set_categories
-    @categories = Category.all
-  end
 
   def category_params
     params.require(:category).permit(:name)

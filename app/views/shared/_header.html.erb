@@ -22,32 +22,52 @@
         </form>
 
         <!-- Category-form/choice -->
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">カテゴリを選択</button>
-            <ul class="dropdown-menu p-3" style="min-width: 350px;">
-              <!-- 新規カテゴリ登録フォーム -->
-              <li>
-                <%= form_with(model: Category.new, url: categories_path, remote: true, html: { class: "d-flex align-items-center gap-2" })  do |form| %>
-                  <%= form.text_field :name, class: "form-control me-2", placeholder: "新しいカテゴリ名", required: true, style: "width: 350px;" %>
-                  <%= form.submit "登録", class: "btn btn-primary" %>
-                <% end %>
-              </li>
-              <!--  既存カテゴリボタン一覧/ユーザーの認証機能実装後に反映 -->
-              <li>
-                <% @categories.each do |category| %>
-                  <button type="button" class="btn btn-light text-nowrap fs-6">
-                    <%= category.name %>
-                  </button>
-                <% end%>
-              </li>
-            </ul>
-        </div>
+        <% if user_signed_in? %>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">カテゴリを選択</button>
+
+            <!-- 選択されたカテゴリを表示用スパン -->
+            <span id="selected-category" class="ms-2 text-white">
+              未選択
+            </span>
+
+              <ul class="dropdown-menu p-3" style="min-width: 250px;">
+                <!-- 新規カテゴリ登録フォーム -->
+                <li>
+                  <%= form_with(model: Category.new, url: categories_path, local: true, html: { class: "d-flex align-items-center gap-2" })  do |form| %>
+                    <%= form.text_field :name, class: "form-control me-2", placeholder: "新しいカテゴリ名", required: true, style: "width: 350px;" %>
+                    <%= form.submit "登録", class: "btn btn-primary" %>
+                  <% end %>
+                </li>
+                <!--  カテゴリボタン一覧表示 -->
+                <li>
+                  <% @categories.each do |category| %>
+                    <button
+                      type="button" class="btn btn-light fs-6 category-select-button"
+                      data-category-name="<%= category.name %>">
+                        <%= category.name %>
+                    </button>
+                  <% end%>
+                </li>
+              </ul>
+          </div>
+        <% end %>
       </div>
 
       <!-- Header-Right -->
       <div class="d-flex align-items-center gap-3">
         <button class="btn btn-secondary" type="button">保存</button>
-        <button class="btn btn-secondary" type="button">ログイン</button>
+
+        <%# ログイン状態を判定し、login/logout切り替え %>
+        <% if user_signed_in? %>
+          <!-- ログイン状態 -->
+          <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, 
+                       data: { confirm: "ログアウトしますか？" }, 
+                       class: "btn btn-secondary" %>
+        <% else %>
+          <!-- ログアウト状態 -->
+          <%= link_to 'ログイン', new_user_session_path, class: "btn btn-secondary" %>
+        <% end %>
       </div>
     </div>
   </nav>
