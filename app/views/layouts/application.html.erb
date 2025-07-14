@@ -14,45 +14,7 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
-    <div class="d-flex flex-column min-vh-100">
-      <!-- ヘッダーの表示切り替え -->
-      <% unless controller.controller_name == "sessions" || controller.controller_name == "registrations" %>
-        <%= render "shared/header" %>
-      <% end %>
-
-      <!-- Devise Flash-message -->
-      <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
-        <% flash.each do |key, value| %>
-          <div class="toast flash-toast align-items-center text-bg-<%= key == 'notice' ? 'success' : 'danger' %>"
-                      role="alert"
-                      aria-live="assertive"
-                      aria-atomic="true"
-                      data-bs-delay="2200" data-bs-autohide="true">
-            <div class="d-flex">
-              <div class="toast-body">
-                <%= value %>
-              </div>
-              <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-          </div>
-        <% end %>
-      </div>
-
-      <!-- main -->
-      <main class="flex-grow-1 d-flex flex-column" style="overflow:hidden">
-        <%= yield %>
-      </main>
-
-      <script>
-        document.addEventListener("turbo:load", function() {
-          // flash-toastクラスを全て表示
-          document.querySelectorAll('.flash-toast').forEach(function(toastEl) {
-            var toast = new bootstrap.Toast(toastEl);
-            toast.show();
-          });
-        });
-      </script>
-    </div>
+  <body style="overflow: hidden">
+    <%= yield %>
   </body>
 </html>
