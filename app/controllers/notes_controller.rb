@@ -14,7 +14,7 @@ class NotesController < ApplicationController
 
     @note = current_user.notes.build(note_params)
     if @note.save
-      redirect_to new_note_path, notice: 'ノートが保存されました'
+      redirect_to edit_note_path(@note), notice: 'ノートが保存されました'
     else
       # エラー時に必要なアソシエーションを再構築
       @note.build_highlight unless @note.highlight

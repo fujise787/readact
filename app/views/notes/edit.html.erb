@@ -1,130 +1,46 @@
-<!-- app/views/notes/new.html.erb -->
-<div data-controller="note" class="d-flex flex-column vh-100">
-  <%= form_with model: @note, id: "note-form", html: {class:"d-flex flex-column h-100 flex-grow-1"}  do |f| %>
-    <!-- ヘッダー -->
-    <header>
-      <nav class="navbar navbar-expand-lg bg-dark px-3">
-        <div class="container-fluid d-flex justify-content-between">
+<div data-controller="note sidebar" class="d-flex vh-100">
+  <!-- サイドバー -->
+  <%= render "shared/sidebar" %>
 
-          <!-- ヘッダー 左 -->
-          <div class="d-flex align-items-center gap-3">
-            <ul class="navbar-nav flex-row mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-layout-sidebar fs-4 text-white"></i></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-pencil-square fs-4 text-white"></i></a>
-              </li>
-            </ul>
+  <div data-sidebar-target="main" id="main-content" class="flex-grow-1 d-flex flex-column">
+    <%= form_with model: @note, id: "note-form", html: {class:"d-flex flex-column h-100 flex-grow-1"}  do |f| %>
+      <!-- ヘッダー -->
+      <%= render "shared/header", f: f %>
 
-            <!-- Brand-name -->
-            <a class="navbar-brand text-white" href="#">Readact</a>
+      <!-- Devise Flash-message -->
+      <div data-controller="flash">
+        <%= render "shared/flash" %>
+      </div>
 
-            <!-- タイトル入力フォーム -->
-            <%= f.text_field :title, class: "form-control", placeholder: "タイトル" %>
-
-            <!-- カテゴリドロップダウン -->
-            <% if user_signed_in? %>
-              <div class="dropdown" data-controller="category" data-category-user-categories-value="<%= current_user.categories.to_json(only: [:id, :name]) %>">
-                <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
-                  <span data-category-target="selectedCategory">カテゴリを選択</span>
-                </button>
-
-                <ul class="dropdown-menu p-3" style="min-width: 250px;" data-category-target="menu">
-                  <!-- 新規カテゴリ入力 ネスト回避 -->
-                  <li class="mb-2">
-                    <div class="d-flex gap-2">
-                      <input type="text" class="form-control" placeholder="新しいカテゴリ名" data-category-target="input">
-                      <%= button_tag "追加", type: "button", class: "btn btn-primary", data: { action: "click->category#create" } %>
-                    </div>
-                  </li>
-
-                  <!-- 既存カテゴリ一覧 -->
-                  <li>
-                    <div class="d-flex flex-column gap-1" data-category-target="list"></div>
-                  </li>
-                </ul>
-
-                <!-- Note 用 hidden_field -->
-                <%= f.hidden_field :category_id, data: { category_target: "categoryId" } %>
-              </div>
+      <!-- ▼ ボディ -->
+      <div class="flex-grow-1">
+        <div class="container-fluid p-0 g-0 h-100 row">
+          <!-- ボディ 左 -->
+          <div class="col-md-6 d-flex flex-column h-100 border-end border-secondary">
+            <%= f.fields_for :highlight do |h| %>
+              <label class="form-label bg-light px-2 py-1 w-100">メモ</label>
+              <%= h.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
             <% end %>
           </div>
 
-          <!-- ヘッダー 右 -->
-          <div class="d-flex align-items-center gap-3">
-
-            <!-- 保存ボタン -->
-            <%= f.submit "保存", class: "btn btn-primary" %>
-
-            <!-- ログイン/ログアウトボタン -->
-            <% if user_signed_in? %>
-              <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { confirm: "ログアウトしますか？" }, class: "btn btn-secondary" %>
-            <% else %>
-              <%= link_to 'ログイン', new_user_session_path, class: "btn btn-secondary" %>
-            <% end %>
-          </div>
-        </div>
-      </nav>
-    </header>
-
-    <!-- Devise Flash-message -->
-    <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
-      <% flash.each do |key, value| %>
-        <div class="toast flash-toast align-items-center text-bg-<%= key == 'notice' ? 'success' : 'danger' %>"
-                    role="alert"
-                    aria-live="assertive"
-                    aria-atomic="true"
-                    data-bs-delay="2200" data-bs-autohide="true">
-          <div class="d-flex">
-            <div class="toast-body">
-              <%= value %>
+          <!-- ボディ 右 -->
+          <div class="col-md-6 d-flex flex-column h-100">
+            <div style="flex: 6; overflow-y: auto;" class="border-bottom border-secondary">
+              <%= f.fields_for :summary do |s| %>
+                <label class="form-label bg-light px-2 py-1 w-100">要約</label>
+                <%= s.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
+              <% end %>
             </div>
-            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-          </div>
-        </div>
-      <% end %>
-    </div>
 
-    <!-- ▼ ボディ -->
-    <div class="flex-grow-1">
-      <div class="container-fluid p-0 g-0 h-100 row">
-        <!-- ボディ 左 -->
-        <div class="col-md-6 d-flex flex-column h-100 border-end border-secondary">
-          <%= f.fields_for :highlight do |h| %>
-            <label class="form-label bg-light px-2 py-1">メモ</label>
-            <%= h.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
-          <% end %>
-        </div>
-
-        <!-- ボディ 右 -->
-        <div class="col-md-6 d-flex flex-column h-100">
-          <div style="flex: 6; overflow-y: auto;" class="border-bottom border-secondary">
-            <%= f.fields_for :summary do |s| %>
-              <label class="form-label bg-light px-2 py-1">要約</label>
-              <%= s.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
-            <% end %>
-          </div>
-
-          <div style="flex: 4; overflow-y: auto;">
-            <%= f.fields_for :actions do |a| %>
-              <label class="form-label bg-light px-2 py-1">行動</label>
-              <%= a.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
-            <% end %>
+            <div style="flex: 4; overflow-y: auto;">
+              <%= f.fields_for :actions do |a| %>
+                <label class="form-label bg-light px-2 py-1 w-100">行動</label>
+                <%= a.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
-
-
-<script>
-  document.addEventListener("turbo:load", function() {
-    // flash-toastクラスを全て表示
-    document.querySelectorAll('.flash-toast').forEach(function(toastEl) {
-      var toast = new bootstrap.Toast(toastEl);
-      toast.show();
-    });
-  });
-</script>

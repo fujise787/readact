@@ -12,3 +12,12 @@ application.register("category", CategoryController)
 
 import NoteController from "./note_controller"
 application.register("note", NoteController)
+
+import FlashController from "./flash_controller"
+application.register("flash", FlashController)
+
+import LogoutController from "./logout_controller"
+application.register("logout", LogoutController)
+
+import SidebarController from "./sidebar_controller"
+application.register("sidebar", SidebarController)
