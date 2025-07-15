@@ -1,0 +1,33 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="container bg-light d-flex justify-content-center align-items-center" style="height: 60vh; width: 60vw;">
+    <div>
+      <h2 class="text-center">新規会員登録</h2>
+
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+
+        <div class="my-3">
+          <%= f.label :email %><br />
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-100" %>
+        </div>
+
+        <div class="my-3">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, autocomplete: "new-password", class: "w-100" %><br />
+          <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %>文字以上でご入力ください)</em>
+          <% end %><br />
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :password_confirmation %><br />
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-100" %>
+        </div>
+
+        <div class="my-3 text-center">
+          <%= f.submit "登録", class: "btn btn-dark w-100" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
