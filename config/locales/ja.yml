@@ -6,3 +6,7 @@ ja:
         password: "パスワード"
         password_confirmation: "パスワード(確認用)"
         remember_me: "ログイン状態を保持する"
+  errors:
+    messages:
+      confirmation: "パスワードが一致していません"
+      taken: "このメールアドレスはすでに登録されています"

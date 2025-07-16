@@ -7,6 +7,16 @@
       <!-- ヘッダー -->
       <%= render "shared/header", f: f %>
 
+      <% if @note.errors.any? %>
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            <% @note.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
       <!-- Devise Flash-message -->
       <div data-controller="flash">
         <%= render "shared/flash" %>
@@ -34,7 +44,7 @@
 
             <div style="flex: 4; overflow-y: auto;">
               <%= f.fields_for :actions do |a| %>
-                <label class="form-label bg-light px-2 py-1 w-100">行動</label>
+                <label class="form-label bg-light px-2 py-1 w-100">行動<span class="text-muted" style="font-size: 0.75rem;">　（行動は3個以内を目安に入力してみましょう）</span></label>
                 <%= a.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
               <% end %>
             </div>

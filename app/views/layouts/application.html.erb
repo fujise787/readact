@@ -15,6 +15,10 @@
   </head>
 
   <body style="overflow: hidden">
+    <div data-controller="flash">
+      <%= render "shared/flash" %>
+    </div>
+
     <%= yield %>
   </body>
 </html>

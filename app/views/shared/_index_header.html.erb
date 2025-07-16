@@ -1,0 +1,40 @@
+<header data-controller="logout">
+  <nav class="navbar navbar-expand-lg bg-dark px-3">
+    <div class="container-fluid d-flex justify-content-between">
+
+      <!-- ヘッダー 左 -->
+      <div class="d-flex align-items-center gap-3">
+        <ul class="navbar-nav flex-row mb-2 mb-lg-0">
+          <li class="nav-item">
+            <button type="button" class="nav-link" data-action="sidebar#toggle">
+              <i class="bi bi-layout-sidebar fs-4 text-white"></i>
+            </button>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/"><i class="bi bi-pencil-square fs-4 text-white"></i></a>
+          </li>
+        </ul>
+
+        <!-- Brand-name -->
+        <a class="navbar-brand text-white" href="/">Readact</a>
+      </div>
+
+      <!-- ヘッダー 右 -->
+      <div class="d-flex align-items-center gap-3">
+
+        <!-- ログイン/ログアウトボタン -->
+        <% if user_signed_in? %>
+          <%= link_to 'ログアウト', '#',
+            data: {
+              action: 'click->logout#handle',
+              url:  destroy_user_session_path,
+              confirm: "ログアウトしますか？"
+            },
+             class: "btn btn-secondary" %>
+        <% else %>
+          <%= link_to 'ログイン', new_user_session_path, class: "btn btn-secondary" %>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,46 @@
+<div data-controller="sidebar" class="d-flex vh-100">
+  <!-- サイドバー -->
+  <%= render "shared/sidebar" %>
+
+  <!-- メインページ -->
+  <div data-sidebar-target="main" id="main-content" class="flex-grow-1 d-flex flex-column h-100">
+    <!-- ヘッダー -->
+    <%= render "shared/index_header" %>
+
+    <!-- ボディ -->
+    <main class="flex-grow-1 d-flex flex-column h-100 py-4">
+      <div class="w-75 mx-auto flex-grow-1 d-flex flex-column h-100">
+        <h2 class="mb-4">ノート一覧</h2>
+
+        <% if @notes.any? %>
+          <div style="max-height: 75vh; overflow-y: auto;">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>タイトル</th>
+                <th>カテゴリ</th>
+                <th>作成日時</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @notes.each do |note| %>
+                <tr>
+                  <td><%= note.title %></td>
+                  <td><%= note.category&.name || "未分類"  %></td>
+                  <td><%= note.created_at.strftime("%Y-%m-%d %H:%M")  %></td>
+                  <td><%= link_to "編集", edit_note_path(note), method: :get, class: "btn btn-secondary btn-sm" %>
+                  <td><%= button_to "削除", note_path(note), method: :delete, data: { turbo_confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-sm" %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p>ノートがありません</p>
+      <% end %>
+      </div>
+    </main>
+  </div>
+</div>

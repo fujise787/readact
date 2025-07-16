@@ -5,18 +5,20 @@
       <!-- ヘッダー 左 -->
       <div class="d-flex align-items-center gap-3">
         <ul class="navbar-nav flex-row mb-2 mb-lg-0">
-          <li class="nav-item">
-            <button type="button" class="nav-link" data-action="sidebar#toggle">
-              <i class="bi bi-layout-sidebar fs-4 text-white"></i>
-            </button>
-          </li>
+          <% if user_signed_in? %>
+            <li class="nav-item">
+              <button type="button" class="nav-link" data-action="sidebar#toggle">
+                <i class="bi bi-layout-sidebar fs-4 text-white"></i>
+              </button>
+            </li>
+          <% end %>
           <li class="nav-item">
             <a class="nav-link" href="/"><i class="bi bi-pencil-square fs-4 text-white"></i></a>
           </li>
         </ul>
 
         <!-- Brand-name -->
-        <a class="navbar-brand text-white" href="#">Readact</a>
+        <a class="navbar-brand text-white" href="/">Readact</a>
 
         <!-- タイトル入力フォーム -->
         <%= f.text_field :title, class: "form-control", placeholder: "タイトル" %>
