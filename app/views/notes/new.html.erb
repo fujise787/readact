@@ -1,42 +1,56 @@
-<!-- app/views/notes/new.html.erb -->
-<div data-controller="note" class="d-flex flex-column vh-100">
-  <%= form_with model: @note, id: "note-form", html: {class:"d-flex flex-column h-100 flex-grow-1"}  do |f| %>
-    <!-- ヘッダー -->
-    <%= render "shared/header", f: f %>
+<div data-controller="note sidebar" class="d-flex vh-100">
+  <!-- サイドバー -->
+  <%= render "shared/sidebar" %>
 
-    <!-- Devise Flash-message -->
-    <div data-controller="flash">
-      <%= render "shared/flash" %>
-    </div>
+  <div data-sidebar-target="main" id="main-content" class="flex-grow-1 d-flex flex-column">
+    <%= form_with model: @note, id: "note-form",  html: {class:"d-flex flex-column h-100 flex-grow-1"}  do |f| %>
+      <!-- ヘッダー -->
+      <%= render "shared/header", f: f %>
 
-    <!-- ▼ ボディ -->
-    <div class="flex-grow-1">
-      <div class="container-fluid p-0 g-0 h-100 row">
-        <!-- ボディ 左 -->
-        <div class="col-md-6 d-flex flex-column h-100 border-end border-secondary">
-          <%= f.fields_for :highlight do |h| %>
-            <label class="form-label bg-light px-2 py-1 w-100">メモ</label>
-            <%= h.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
-          <% end %>
+      <% if @note.errors.any? %>
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            <% @note.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
         </div>
+      <% end %>
 
-        <!-- ボディ 右 -->
-        <div class="col-md-6 d-flex flex-column h-100">
-          <div style="flex: 6; overflow-y: auto;" class="border-bottom border-secondary">
-            <%= f.fields_for :summary do |s| %>
-              <label class="form-label bg-light px-2 py-1 w-100">要約</label>
-              <%= s.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
+      <!-- Devise Flash-message -->
+      <div data-controller="flash">
+        <%= render "shared/flash" %>
+      </div>
+
+      <!-- ▼ ボディ -->
+      <div class="flex-grow-1">
+        <div class="container-fluid p-0 g-0 h-100 row">
+          <!-- ボディ 左 -->
+          <div class="col-md-6 d-flex flex-column h-100 border-end border-secondary">
+            <%= f.fields_for :highlight do |h| %>
+              <label class="form-label bg-light px-2 py-1 w-100">メモ</label>
+              <%= h.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
             <% end %>
           </div>
 
-          <div style="flex: 4; overflow-y: auto;">
-            <%= f.fields_for :actions do |a| %>
-              <label class="form-label bg-light px-2 py-1 w-100">行動</label>
-              <%= a.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
-            <% end %>
+          <!-- ボディ 右 -->
+          <div class="col-md-6 d-flex flex-column h-100">
+            <div style="flex: 6; overflow-y: auto;" class="border-bottom border-secondary">
+              <%= f.fields_for :summary do |s| %>
+                <label class="form-label bg-light px-2 py-1 w-100">要約</label>
+                <%= s.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
+              <% end %>
+            </div>
+
+            <div style="flex: 4; overflow-y: auto;">
+              <%= f.fields_for :actions do |a| %>
+                <label class="form-label bg-light px-2 py-1 w-100">行動<span class="text-muted" style="font-size: 0.75rem;">　（行動は3個以内を目安に入力してみましょう）</span></label>
+                <%= a.text_area :content, class: "form-control border-0 h-100", style: "resize: none; outline: none; box-shadow: none;"  %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
