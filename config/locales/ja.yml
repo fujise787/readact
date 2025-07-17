@@ -8,7 +8,8 @@ ja:
         encrypted_password: "パスワード(確認用)"
         remember_me: "ログイン状態を保持する"
   errors:
+    format: "%{message}"
     messages:
       confirmation: "パスワードが一致していません"
-      taken: "このメールアドレスはすでに登録されています"
-      blank: "を入力してください"
+      taken: "登録できませんでした。入力内容をご確認ください"
+      blank: "%{attribute}を入力してください"
